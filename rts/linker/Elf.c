@@ -393,6 +393,12 @@ ocVerifyImage_ELF ( ObjectCode* oc )
 #endif
 #if defined(EM_AARCH64)
       case EM_AARCH64: IF_DEBUG(linker,debugBelch( "aarch64" )); break;
+#if defined(EM_E2K)
+      case EM_E2K: IF_DEBUG(linker,debugBelch( "e2k" ));
+          errorBelch("%s: RTS linker not implemented on Elbrus 2000",
+                     oc->fileName);
+          return 0;
+#endif
 #endif
        default:       IF_DEBUG(linker,debugBelch( "unknown" ));
                      errorBelch("%s: unknown architecture (e_machine == %d)"
