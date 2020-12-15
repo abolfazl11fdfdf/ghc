@@ -63,6 +63,7 @@ data Arch
         | ArchAlpha
         | ArchMipseb
         | ArchMipsel
+        | ArchE2k
         | ArchJavaScript
         deriving (Read, Show, Eq)
 

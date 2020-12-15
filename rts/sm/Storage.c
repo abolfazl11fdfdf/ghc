@@ -1402,20 +1402,12 @@ void flushExec (W_ len, AdjustorExecutable exec_addr)
 #elif defined(__clang__)
   unsigned char* begin = (unsigned char*)exec_addr;
   unsigned char* end   = begin + len;
-# if __has_builtin(__builtin___clear_cache)
-  __builtin___clear_cache((void*)begin, (void*)end);
-# else
   __clear_cache((void*)begin, (void*)end);
-# endif
 #elif defined(__GNUC__)
   unsigned char* begin = (unsigned char*)exec_addr;
   unsigned char* end   = begin + len;
-# if GCC_HAS_BUILTIN_CLEAR_CACHE
-  __builtin___clear_cache((void*)begin, (void*)end);
-# else
   /* For all other platforms, fall back to a libgcc builtin. */
   __clear_cache((void*)begin, (void*)end);
-# endif
 #else
 #error Missing support to flush the instruction cache
 #endif
