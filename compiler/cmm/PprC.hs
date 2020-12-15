@@ -1151,6 +1151,7 @@ cLoad expr rep
           bewareLoadStoreAlignment ArchARM64    = True
           bewareLoadStoreAlignment ArchSPARC    = True
           bewareLoadStoreAlignment ArchSPARC64  = True
+          bewareLoadStoreAlignment ArchE2k      = True
           -- Pessimistically assume that they will also cause problems
           -- on unknown arches
           bewareLoadStoreAlignment ArchUnknown  = True
