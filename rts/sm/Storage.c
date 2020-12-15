@@ -1393,7 +1393,8 @@ void flushExec (W_ len, AdjustorExecutable exec_addr)
   unsigned char* begin = (unsigned char*)exec_addr;
   unsigned char* end   = begin + len;
 # if __has_builtin(__builtin___clear_cache)
-  __builtin___clear_cache((void*)begin, (void*)end);
+  /* __builtin___clear_cache((void*)begin, (void*)end); */
+  __clear_cache((void*)begin, (void*)end);
 # else
   __clear_cache((void*)begin, (void*)end);
 # endif
@@ -1405,7 +1406,8 @@ void flushExec (W_ len, AdjustorExecutable exec_addr)
    * We pick 4.4 to simplify condition a bit.
    */
 # if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4)
-  __builtin___clear_cache((void*)begin, (void*)end);
+  /*__builtin___clear_cache((void*)begin, (void*)end);*/
+  __clear_cache((void*)begin, (void*)end);
 # else
   __clear_cache((void*)begin, (void*)end);
 # endif
