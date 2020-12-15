@@ -288,7 +288,7 @@ AC_SUBST(Unregisterised)
 dnl ** Does target have runtime linker support?
 dnl --------------------------------------------------------------
 case "$target" in
-    powerpc64-*|powerpc64le-*|powerpc-ibm-aix*)
+    e2k*|powerpc64-*|powerpc64le-*|powerpc-ibm-aix*)
         HaskellHaveRTSLinker=NO
         ;;
     *)
