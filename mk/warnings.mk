@@ -24,7 +24,7 @@ ifneq "$(GccIsClang)" "YES"
 ifeq "$(GccLT46)" "NO"
 # Never set the flag on Windows as the host gcc may be too old.
 ifneq "$(HostOS_CPP)" "mingw32"
-SRC_CC_WARNING_OPTS += -Werror=unused-but-set-variable
+#SRC_CC_WARNING_OPTS += -Werror=unused-but-set-variable
 endif
 endif
 
