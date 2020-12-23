@@ -390,8 +390,12 @@ RTS_FUN_DECL(stg_copySmallMutableArrayzh);
 RTS_FUN_DECL(stg_casSmallArrayzh);
 
 RTS_FUN_DECL(stg_newMutVarzh);
+#if __GLASGOW_HASKELL__ < 808
+RTS_FUN_DECL(stg_atomicModifyMutVarzh);
+#else
 RTS_FUN_DECL(stg_atomicModifyMutVar2zh);
 RTS_FUN_DECL(stg_atomicModifyMutVarzuzh);
+#endif
 RTS_FUN_DECL(stg_casMutVarzh);
 
 RTS_FUN_DECL(stg_isEmptyMVarzh);
