@@ -30,7 +30,7 @@
  * the stack, and components of an unboxed tuple will be returned on
  * the stack rather than in registers.
  */
-#if defined(NO_REGS)
+#if defined(NO_REGS) || defined(e2k_HOST_ARCH)
 
 #define MACHREGS_NO_REGS 1
 
