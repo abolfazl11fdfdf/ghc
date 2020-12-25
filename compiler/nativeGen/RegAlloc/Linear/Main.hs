@@ -221,6 +221,7 @@ linearRegAlloc dflags entry_ids block_live sccs
       ArchAlpha      -> panic "linearRegAlloc ArchAlpha"
       ArchMipseb     -> panic "linearRegAlloc ArchMipseb"
       ArchMipsel     -> panic "linearRegAlloc ArchMipsel"
+      ArchE2k        -> panic "linearRegAlloc ArchE2k"
       ArchJavaScript -> panic "linearRegAlloc ArchJavaScript"
       ArchUnknown    -> panic "linearRegAlloc ArchUnknown"
  where
