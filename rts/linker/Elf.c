@@ -414,6 +414,9 @@ ocVerifyImage_ELF ( ObjectCode* oc )
 #if defined(EM_AARCH64)
       case EM_AARCH64: IF_DEBUG(linker,debugBelch( "aarch64" )); break;
 #endif
+#if defined(EM_MCST_ELBRUS)
+      case EM_MCST_ELBRUS: IF_DEBUG(linker,debugBelch( "e2k" )); break;
+#endif
        default:       IF_DEBUG(linker,debugBelch( "unknown" ));
                      errorBelch("%s: unknown architecture (e_machine == %d)"
                                 , oc->fileName, ehdr->e_machine);
