@@ -1545,23 +1545,30 @@ StgWord calcTotalCompactW (void)
 #include <libkern/OSCacheControl.h>
 #endif
 
-/* __builtin___clear_cache is supported since GNU C 4.3.6.
- * We pick 4.4 to simplify condition a bit.
- */
-#define GCC_HAS_BUILTIN_CLEAR_CACHE (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
-
 #if defined(__clang__)
 /* clang defines __clear_cache as a builtin on some platforms.
  * For example on armv7-linux-androideabi. The type slightly
  * differs from gcc.
  */
 extern void __clear_cache(void * begin, void * end);
-#elif defined(__GNUC__) && !GCC_HAS_BUILTIN_CLEAR_CACHE
-/* __clear_cache is a libgcc function.
- * It existed before __builtin___clear_cache was introduced.
- * See #8562.
+#elif defined(__GNUC__)
+/* __builtin___clear_cache is supported since GNU C 4.3.6.
+ * We pick 4.4 to simplify condition a bit. For other platforms, there
+ * is __clear_cache, which is a libgcc function.
+ * See #8562 and #16867.
  */
+# if (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
+
+/* There are compilers that pretend to be a recent GCC but don't have __builtin_clear_cache,
+ * so we have to check that, too.
+ */
+#  if (!__has_builtin(__builtin_clear_cache))
+extern void __clear_cache(void * begin, void * end);
+#  endif /* !__has_builtin(__builtin_clear_cache) */
+
+# else
 extern void __clear_cache(char * begin, char * end);
+# endif /* GNU C 4.4 */
 #endif /* __GNUC__ */
 
 /* On ARM and other platforms, we need to flush the cache after
@@ -1584,10 +1591,9 @@ void flushExec (W_ len, AdjustorExecutable exec_addr)
   __clear_cache((void*)begin, (void*)end);
 # endif
 #elif defined(__GNUC__)
-  /* For all other platforms, fall back to a libgcc builtin. */
   unsigned char* begin = (unsigned char*)exec_addr;
   unsigned char* end   = begin + len;
-# if GCC_HAS_BUILTIN_CLEAR_CACHE
+# if ((__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4)) && __has_builtin(__builtin_clear_cache))
   __builtin___clear_cache((void*)begin, (void*)end);
 # else
   /* For all other platforms, fall back to a libgcc builtin. */
